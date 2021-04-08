@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PersonalInfoApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register">Register</string>
+    <string name="login">LogIn</string>
+    <string name="signout">Signout</string>
+    <string name="signup">SignUp</string>
+    <string name="mobile">Mobile number</string>
+    <string name="date">Enter your birthdate</string>
+    <string name="city">Enter your City</string>
+    <string name="gender">select Gender</string>
+    <string name="dashboard"></string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="cpassword">Confirm password</string>
+</resources>
