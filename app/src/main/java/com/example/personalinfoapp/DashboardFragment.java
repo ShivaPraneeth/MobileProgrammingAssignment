@@ -24,9 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DashboardFragment extends Fragment {
 
-
-    Button btn_signOut;
+    // Button btn_signOut;
     FirebaseUser user;
+    FirebaseAuth firebaseAuth;
     FirebaseFirestore fireStore;
     NavController navController;
     TextView txt_Name;
@@ -37,15 +37,6 @@ public class DashboardFragment extends Fragment {
     }
 
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        user = getArguments().getParcelable("user");
-        fireStore = FirebaseFirestore.getInstance();
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,24 +46,31 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        btn_signOut = view.findViewById(R.id.btn_signOut);
+        getActivity().setTitle("Welcome");
+        //   btn_signOut = view.findViewById(R.id.btn_signOut);
         txt_Name = view.findViewById(R.id.txt_welcome);
+        firebaseAuth=FirebaseAuth.getInstance();
+        fireStore=FirebaseFirestore.getInstance();
 
-        navController = Navigation.findNavController(getActivity(),R.id.host_fragment);
+        // navController = Navigation.findNavController(getActivity(),R.id.host_fragment);
 
         readFireStore();
 
-        btn_signOut.setOnClickListener(view1 -> {
+   /*     btn_signOut.setOnClickListener(view1 -> {
 
             FirebaseAuth.getInstance().signOut();
             navController.navigate(R.id.loginFragment);
 
         });
+
+    */
+
+
     }
 
     public void readFireStore()
     {
+        user=firebaseAuth.getCurrentUser();
         DocumentReference docRef = fireStore.collection("User").document(user.getUid());
 
         docRef.get().addOnCompleteListener(task -> {
@@ -92,4 +90,5 @@ public class DashboardFragment extends Fragment {
             }
         });
     }
+
 }

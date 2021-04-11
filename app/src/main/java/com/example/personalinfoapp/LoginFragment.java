@@ -1,5 +1,6 @@
 package com.example.personalinfoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -66,12 +67,22 @@ public class LoginFragment extends Fragment {
 
         navController = Navigation.findNavController(getActivity(),R.id.host_fragment);
 
+        currentUser = fireAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            Toast.makeText(getActivity().getApplicationContext(), "User Already Signing", Toast.LENGTH_LONG).show();
+            Intent intent=new Intent(getActivity(),MainActivity2.class);
+            startActivity(intent);
+//            updateUI(currentUser);
+
+        }
+
         btn_signup.setOnClickListener(view1 -> {
             navController.navigate(R.id.registerFragment);
         });
 
-        btn_login.setOnClickListener(view2 ->{
 
+        btn_login.setOnClickListener(view2 ->{
             if (!checkEmptyFields())
             {
                 String email = edt_email.getText().toString();
@@ -85,15 +96,9 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("LoginFragment","onStart Called!");
+        Log.d("LoginFragment", "onStart Called!");
 
-        currentUser = fireAuth.getCurrentUser();
 
-        if (currentUser != null)
-        {
-            updateUI(currentUser);
-            Toast.makeText(getActivity().getApplicationContext(),"User Already Signing",Toast.LENGTH_LONG).show();
-        }
     }
 
     public void loginUser(String email, String pass)
@@ -105,7 +110,9 @@ public class LoginFragment extends Fragment {
                     {
                         Toast.makeText(getActivity().getApplicationContext(),"Login Success!", Toast.LENGTH_SHORT).show();
                         currentUser = fireAuth.getCurrentUser();
-                        updateUI(currentUser);
+//                         updateUI(currentUser);
+                        Intent intent = new Intent(getActivity().getApplicationContext(),MainActivity2.class);
+                        startActivity(intent);
                     }else {
                         Toast.makeText(getActivity().getApplicationContext(),"Authenticate Failed!", Toast.LENGTH_SHORT).show();
                     }
@@ -114,12 +121,18 @@ public class LoginFragment extends Fragment {
     }
 
 
-    public void updateUI(FirebaseUser user)
-    {
-        Bundle b = new Bundle();
-        b.putParcelable("user",user);
-        navController.navigate(R.id.dashboardFragment,b);
-    }
+//  public void updateUI(FirebaseUser user)
+//    {
+//        Bundle b = new Bundle();
+//        b.putParcelable("user",user);
+//// Intent intent = new Intent(getActivity().getApplicationContext(),MainActivity2.class);
+//// startActivity(intent);
+////      (R.id.MainActivity2.class);
+//
+//
+//    }
+//
+//
 
     public boolean checkEmptyFields()
     {
